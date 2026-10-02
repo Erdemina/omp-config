@@ -1,0 +1,26 @@
+# Optional per-run restriction for a Codex-only unattended lane.
+# Keep the global GPT/Claude fallback intact. Do not change approval mode.
+enabledProviders:
+  - openai-codex
+disabledProviders:
+  - openrouter
+  - opencode-go
+  - opencode-zen
+retry:
+  modelFallback: false
+  usageAwareFallback: false
+modelRoles:
+  default: openai-codex/gpt-6-sol:medium
+  orchestrator: openai-codex/gpt-6-sol:medium
+  plan: openai-codex/gpt-6-sol:high
+  slow: openai-codex/gpt-6-sol:high
+  task: openai-codex/gpt-6-luna:medium
+  smol: openai-codex/gpt-6-luna:low
+task:
+  maxConcurrency: 2
+  agentModelOverrides:
+    task: openai-codex/gpt-6-luna:medium
+    scout: openai-codex/gpt-6-luna:medium
+    sonic: openai-codex/gpt-6-luna:low
+    opus: openai-codex/gpt-6-sol:high
+    gpt6: openai-codex/gpt-6-sol:high

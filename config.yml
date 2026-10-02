@@ -1,0 +1,80 @@
+setupVersion: 2
+modelRoles:
+  orchestrator: anthropic/claude-opus-5-5:medium
+  default: openai-codex/gpt-6-astra:medium
+  plan: anthropic/claude-opus-5-5:high
+  slow: openai-codex/gpt-6-sol:high
+  task: anthropic/claude-sonnet-5:low
+  smol: anthropic/claude-haiku-4-5:low
+  tiny: anthropic/claude-haiku-4-5:low
+  commit: anthropic/claude-haiku-4-5:low
+  advisor: anthropic/claude-sonnet-5:medium
+  vision: anthropic/claude-sonnet-5:medium
+  image: openai-codex/gpt-image-1
+modelTags:
+  orchestrator:
+    name: Primary (AUTO)
+    color: success
+cycleOrder:
+  - orchestrator
+  - smol
+  - slow
+defaultThinkingLevel: auto
+hideThinkingBlock: false
+retry:
+  modelFallback: true
+  usageAwareFallback: true
+  usageReservePct: 5
+  usageReservePolicy: auto
+  fallbackRevertPolicy: cooldown-expiry
+  fallbackChains:
+    orchestrator:
+      - anthropic/claude-opus-5-5:medium
+    default:
+      - anthropic/claude-opus-5-5:medium
+    plan:
+      - openai-codex/gpt-6-sol:high
+    slow:
+      - anthropic/claude-opus-5-5:high
+    task:
+      - openai-codex/gpt-6-luna:medium
+    smol:
+      - openai-codex/gpt-6-luna:low
+    tiny:
+      - openai-codex/gpt-6-luna:low
+    commit:
+      - openai-codex/gpt-6-luna:low
+    advisor:
+      - openai-codex/gpt-6-sol:medium
+    vision:
+      - openai-codex/gpt-6-sol:medium
+enabledProviders:
+  - openai-codex
+  - anthropic
+task:
+  enableEffort: true
+  maxConcurrency: 3
+  maxRuntimeMs: 2700000
+  softRequestBudget: 80
+  showResolvedModelBadge: true
+  agentModelOverrides:
+    task:
+      - "@task"
+      - openai-codex/gpt-6-luna:medium
+    scout:
+      - "@task"
+      - openai-codex/gpt-6-luna:medium
+    sonic:
+      - "@smol"
+      - openai-codex/gpt-6-luna:low
+compaction:
+  thresholdTokens: 110000
+  idleEnabled: true
+  idleThresholdTokens: 65000
+  idleTimeoutSeconds: 3600
+recap:
+  enabled: false
+dev:
+  autoqaConsent: granted
+codexResets:
+  autoRedeem: "yes"
