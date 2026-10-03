@@ -4,12 +4,12 @@ modelRoles:
   default: openai-codex/gpt-6-astra:medium
   plan: anthropic/claude-opus-5-5:high
   slow: openai-codex/gpt-6-sol:high
-  task: anthropic/claude-sonnet-5:low
+  task: anthropic/claude-sonnet-5-5:low
   smol: anthropic/claude-haiku-4-5:low
   tiny: anthropic/claude-haiku-4-5:low
   commit: anthropic/claude-haiku-4-5:low
-  advisor: anthropic/claude-sonnet-5:medium
-  vision: anthropic/claude-sonnet-5:medium
+  advisor: anthropic/claude-sonnet-5-5:medium
+  vision: anthropic/claude-sonnet-5-5:medium
   image: openai-codex/gpt-image-1
 modelTags:
   orchestrator:
