@@ -2,7 +2,7 @@ setupVersion: 2
 modelRoles:
   orchestrator: anthropic/claude-opus-5-5:low
   plan: anthropic/claude-opus-5-5:low
-  slow: openai-codex/gpt-6-sol:high
+  slow: openai-codex/gpt-6-sol
   task: anthropic/claude-sonnet-5-5:low
   smol: anthropic/claude-haiku-4-5:low
   tiny: anthropic/claude-haiku-4-5:low

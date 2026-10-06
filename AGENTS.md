@@ -12,6 +12,10 @@ Model routing lives in `config.yml`; don't restate it here. Keep the model the u
 
 Delegate only when it clearly beats doing the work yourself; ordinary coding stays with the primary agent. This machine has 14 GiB RAM: at most 3 concurrent subagents, fewer when something else heavy is running. Parallel writers need disjoint files (otherwise separate Git worktrees); you integrate and run the final check. Pick the cheapest model that can reliably do the slice. Unattended jobs keep the existing approval rules.
 
+## Effort
+
+The orchestrator picks thinking/effort per task, never as a session default. `defaultThinkingLevel: minimal` is the ceiling for ordinary work. Escalate a specific task with an explicit `model: "provider/model:high"` only when that task actually fails or needs it; never raise the whole lane. The `slow` lane is GPT-6 Sol on Codex (its own quota); still pick its effort per task, not as a default.
+
 ## Durable memory
 
 Shared memory for every agent on this machine (omp, Claude Code, Codex) is the private Git repo `~/erdem-memory`. At the start of non-trivial work read its `INDEX.md`, then only the matching `user.md`, `machine.md` or `projects/<slug>.md`; trust it instead of re-surveying projects, and verify a fact against the repo before acting on it if it may be stale.
