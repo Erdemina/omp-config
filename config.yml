@@ -1,16 +1,16 @@
 setupVersion: 2
 modelRoles:
-  orchestrator: anthropic/claude-opus-5-5:medium
-  default: openai-codex/gpt-6-astra:medium
-  plan: anthropic/claude-opus-5-5:high
+  orchestrator: anthropic/claude-opus-5-5:low
+  plan: anthropic/claude-opus-5-5:low
   slow: openai-codex/gpt-6-sol:high
   task: anthropic/claude-sonnet-5-5:low
   smol: anthropic/claude-haiku-4-5:low
   tiny: anthropic/claude-haiku-4-5:low
   commit: anthropic/claude-haiku-4-5:low
-  advisor: anthropic/claude-sonnet-5-5:medium
-  vision: anthropic/claude-sonnet-5-5:medium
+  advisor: anthropic/claude-sonnet-5-5:low
+  vision: anthropic/claude-sonnet-5-5:low
   image: openai-codex/gpt-image-1
+  default: openai-codex/gpt-6-astra
 modelTags:
   orchestrator:
     name: Primary (AUTO)
@@ -19,58 +19,29 @@ cycleOrder:
   - orchestrator
   - smol
   - slow
-defaultThinkingLevel: auto
+defaultThinkingLevel: minimal
 hideThinkingBlock: false
 retry:
-  modelFallback: true
-  usageAwareFallback: true
-  usageReservePct: 5
-  usageReservePolicy: auto
-  fallbackRevertPolicy: cooldown-expiry
-  fallbackChains:
-    orchestrator:
-      - anthropic/claude-opus-5-5:medium
-    default:
-      - anthropic/claude-opus-5-5:medium
-    plan:
-      - openai-codex/gpt-6-sol:high
-    slow:
-      - anthropic/claude-opus-5-5:high
-    task:
-      - openai-codex/gpt-6-luna:medium
-    smol:
-      - openai-codex/gpt-6-luna:low
-    tiny:
-      - openai-codex/gpt-6-luna:low
-    commit:
-      - openai-codex/gpt-6-luna:low
-    advisor:
-      - openai-codex/gpt-6-sol:medium
-    vision:
-      - openai-codex/gpt-6-sol:medium
+  modelFallback: false
+  usageAwareFallback: false
+  fallbackRevertPolicy: never
 enabledProviders:
   - openai-codex
   - anthropic
 task:
   enableEffort: true
-  maxConcurrency: 3
+  maxConcurrency: 2
   maxRuntimeMs: 2700000
   softRequestBudget: 80
   showResolvedModelBadge: true
   agentModelOverrides:
-    task:
-      - "@task"
-      - openai-codex/gpt-6-luna:medium
-    scout:
-      - "@task"
-      - openai-codex/gpt-6-luna:medium
-    sonic:
-      - "@smol"
-      - openai-codex/gpt-6-luna:low
+    task: "@task"
+    scout: "@task"
+    sonic: "@smol"
 compaction:
-  thresholdTokens: 110000
+  thresholdTokens: 25000
   idleEnabled: true
-  idleThresholdTokens: 65000
+  idleThresholdTokens: 40000
   idleTimeoutSeconds: 3600
 recap:
   enabled: false

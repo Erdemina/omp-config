@@ -1,5 +1,5 @@
 # Optional per-run restriction for a Codex-only unattended lane.
-# Keep the global GPT/Claude fallback intact. Do not change approval mode.
+# Keep model fallback disabled. Do not change approval mode.
 enabledProviders:
   - openai-codex
 disabledProviders:

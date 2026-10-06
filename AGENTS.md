@@ -4,9 +4,9 @@ Model routing lives in `config.yml`; don't restate it here. Keep the model the u
 
 ## Providers and quota
 
-- Only `openai-codex` and `anthropic` are enabled; never route through a metered aggregator, and don't alternate providers to "balance" them.
+- Preserve the user's explicit model and provider, including an explicitly selected OpenRouter model. Never switch providers automatically or route delegation through a metered aggregator unless explicitly requested.
 - Before large unattended parallel work, check `omp usage`. Missing, stale, zeroed or failed measurements mean quota is UNKNOWN — neither free nor exhausted. A provider error alone isn't a quota wall.
-- Cross-provider fallback isn't guaranteed: a print-mode `@plan` run once ended on an Anthropic 429 without switching. Tools are not rolled back on failure — inspect the working tree, then continue on the available provider from a compact checkpoint.
+- If the selected model is unavailable, report the error instead of choosing another model. Tools are not rolled back on failure; preserve a compact checkpoint so the user can explicitly choose how to continue.
 
 ## Delegation
 
@@ -21,3 +21,14 @@ Write there only lasting facts: user preferences, architecture, decisions with d
 ## Skills
 
 When a workflow keeps recurring and its steps can't be read off the repo, offer to turn it into a skill. Personal skills live in `~/dev_space/dotfiles/skills/<name>/SKILL.md`, with the folder symlinked into `~/.omp/agent/skills/`, `~/.claude/skills/` and `~/.agents/skills/`. Project-only skills go in the project's `.claude/skills/`, symlinked as `.agents/skills/` for Codex. Keep the description short and specific about when to use it; the body holds only what a model couldn't infer, with fragile steps as bundled scripts.
+
+## Turkish output (ASD-STE100)
+
+User-facing replies MUST be in Turkish. Apply Simplified Technical English (ASD-STE100) rules to Turkish output:
+
+- One sentence, one idea. Short sentences.
+- Active voice. "Düzelttim", not "düzeltildi". Say what you did, not what was done.
+- Same concept, same word. Pick one term per concept and keep it.
+- No jargon, no metaphor, no idioms. Prefer everyday words.
+- State facts, decisions, and risks plainly. No filler, no hedging.
+- Code, file names, commands and provider/model ids stay in English; only prose is Turkish.
