@@ -1,0 +1,44 @@
+# Shared by both profiles. install.ts merges this file with one profile into
+# ~/.omp/agent/config.yml. Every key is checked against the installed omp by
+# tests/validate.ts; see README.md for why each value is set.
+
+# BALANCED effort for any model chosen without a role suffix (/model, --model).
+defaultThinkingLevel: medium
+
+# Ctrl+P cycles FAST -> BALANCED -> DEEP. Each role carries its own effort suffix.
+cycleOrder: [smol, default, slow]
+modelTags:
+  smol: { name: FAST, color: warning }
+  default: { name: BALANCED, color: success }
+  slow: { name: DEEP, color: accent }
+
+# Never change model or provider on errors, quota limits or context overflow.
+retry:
+  modelFallback: false
+  usageAwareFallback: false
+  fallbackRevertPolicy: never
+contextPromotion:
+  enabled: false
+
+# Single-agent first: subagents run one at a time and cannot spawn more.
+task:
+  maxConcurrency: 1
+  maxRecursionDepth: 1
+  completionProbe: false
+  enableEffort: true
+  showResolvedModelBadge: true
+
+# 1M-token Claude models compact at ~255k (300k base minus the 15% reserve)
+# instead of ~850k. Codex models (272k window) keep the built-in ~231k trigger.
+compaction:
+  modelThresholds:
+    "anthropic/*": 300000
+
+# Background model calls that do not serve the task.
+title:
+  generator: tiny
+  refreshOnReplan: false
+recap:
+  enabled: false
+dev:
+  autoqa: false

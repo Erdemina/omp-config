@@ -1,0 +1,17 @@
+# CODEX-ONLY profile. Every role is an OpenAI Codex model; Anthropic is disabled.
+# Also usable per run: omp --config ~/.omp/agent/profiles/codex.yml
+modelRoles:
+  default: openai-codex/gpt-6-sol:medium
+  smol: openai-codex/gpt-6-luna:low
+  slow: openai-codex/gpt-6-astra:high
+  plan: openai-codex/gpt-6-astra:high
+  task: openai-codex/gpt-6-sol:medium
+  vision: openai-codex/gpt-6-sol:medium
+  commit: openai-codex/gpt-6-luna:low
+  tiny: openai-codex/gpt-6-luna:low
+  judge: openai-codex/gpt-6-luna:low
+  image: openai-codex/gpt-image-2
+# Hard block on the other subscription, and a scope that stops omp from starting
+# on any other logged-in provider when this one is not logged in.
+disabledProviders: [anthropic]
+enabledModels: ["openai-codex/*"]

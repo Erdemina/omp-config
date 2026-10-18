@@ -1,0 +1,8 @@
+[
+  {"id": "rename", "kind": "simple modification", "prompt": "Rename fmt_price in inventory/report.py to format_price and update every caller.", "tests": ["tests.test_store"]},
+  {"id": "fractional", "kind": "small bug fix", "prompt": "Store.total_value gives wrong totals for items with fractional prices. Fix it.", "tests": ["tests.test_store"]},
+  {"id": "discount", "kind": "multi-file feature", "prompt": "Add an optional discount field to Item (percent, default 0). Apply it in Store.total_value and show it in the report line of discounted items as e.g. '(-25%)'. Add tests.", "tests": ["tests.test_store"]},
+  {"id": "stale", "kind": "complex debugging", "prompt": "Users report that Store.total_value sometimes shows an old total after items change. Find the root cause and fix it.", "tests": ["tests.test_store"]},
+  {"id": "money", "kind": "refactoring", "prompt": "Move fmt_price out of inventory/report.py into a new module inventory/money.py without changing behaviour.", "tests": ["tests.test_store"]},
+  {"id": "tdd", "kind": "test-driven bug repair", "prompt": "tests/test_parse.py has a failing test. Make it pass without breaking the other tests.", "tests": ["tests.test_store", "tests.test_parse"]}
+]

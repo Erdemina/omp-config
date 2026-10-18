@@ -1,0 +1,21 @@
+# CLAUDE-ONLY profile. Every role is an Anthropic model; Codex is disabled.
+# Also usable per run: omp --config ~/.omp/agent/profiles/claude.yml
+modelRoles:
+  default: anthropic/claude-sonnet-5-5:medium
+  smol: anthropic/claude-haiku-5-5:low
+  slow: anthropic/claude-opus-5-5:high
+  plan: anthropic/claude-opus-5-5:high
+  task: anthropic/claude-sonnet-5-5:medium
+  vision: anthropic/claude-sonnet-5-5:medium
+  commit: anthropic/claude-haiku-5-5:low
+  tiny: anthropic/claude-haiku-5-5:low
+  judge: anthropic/claude-haiku-5-5:low
+# Hard block on the other subscription, and a scope that stops omp from starting
+# on any other logged-in provider when this one is not logged in. Exact ids:
+# the glob "anthropic/*" would also match OpenRouter's "anthropic/claude-..." ids.
+disabledProviders: [openai-codex]
+enabledModels:
+  - anthropic/claude-opus-5-5
+  - anthropic/claude-sonnet-5-5
+  - anthropic/claude-haiku-5-5
+  - anthropic/claude-fable-5-1

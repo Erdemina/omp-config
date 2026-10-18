@@ -1,0 +1,11 @@
+diff --git a/inventory/store.py b/inventory/store.py
+index 8f5c5fa..ba4d402 100644
+--- a/inventory/store.py
++++ b/inventory/store.py
+@@ -27,5 +27,5 @@ class Store:
+ 
+     def total_value(self) -> float:
+         if self._total is None:
+-            self._total = sum(int(i.price) * i.qty for i in self._items.values())
++            self._total = sum(i.price * i.qty for i in self._items.values())
+         return self._total

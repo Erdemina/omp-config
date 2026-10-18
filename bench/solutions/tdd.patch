@@ -1,0 +1,14 @@
+diff --git a/inventory/parse.py b/inventory/parse.py
+index 9953618..a92c0ab 100644
+--- a/inventory/parse.py
++++ b/inventory/parse.py
+@@ -1,6 +1,8 @@
++import csv
++
+ from .models import Item
+ 
+ 
+ def parse_line(line: str) -> Item:
+-    name, price, qty = line.split(",")
++    name, price, qty = (field.strip() for field in next(csv.reader([line.strip()], skipinitialspace=True)))
+     return Item(name, float(price), int(qty))

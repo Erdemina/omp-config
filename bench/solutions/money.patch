@@ -1,0 +1,24 @@
+diff --git a/inventory/money.py b/inventory/money.py
+new file mode 100644
+index 0000000..227b3a1
+--- /dev/null
++++ b/inventory/money.py
+@@ -0,0 +1,2 @@
++def fmt_price(value: float) -> str:
++    return f"${value:,.2f}"
+diff --git a/inventory/report.py b/inventory/report.py
+index 6aeceba..d863203 100644
+--- a/inventory/report.py
++++ b/inventory/report.py
+@@ -1,10 +1,7 @@
++from .money import fmt_price
+ from .store import Store
+ 
+ 
+-def fmt_price(value: float) -> str:
+-    return f"${value:,.2f}"
+-
+-
+ def format_report(store: Store) -> str:
+     lines = [f"{i.name}: {i.qty} x {fmt_price(i.price)}" for i in store.items()]
+     lines.append(f"Total: {fmt_price(store.total_value())}")

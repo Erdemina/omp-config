@@ -1,0 +1,35 @@
+diff --git a/inventory/models.py b/inventory/models.py
+index ddc6ed8..908c210 100644
+--- a/inventory/models.py
++++ b/inventory/models.py
+@@ -6,3 +6,4 @@ class Item:
+     name: str
+     price: float
+     qty: int = 1
++    discount: float = 0
+diff --git a/inventory/report.py b/inventory/report.py
+index 6aeceba..30a75e1 100644
+--- a/inventory/report.py
++++ b/inventory/report.py
+@@ -6,6 +6,9 @@ def fmt_price(value: float) -> str:
+ 
+ 
+ def format_report(store: Store) -> str:
+-    lines = [f"{i.name}: {i.qty} x {fmt_price(i.price)}" for i in store.items()]
++    lines = [
++        f"{i.name}: {i.qty} x {fmt_price(i.price)}" + (f" (-{i.discount:g}%)" if i.discount else "")
++        for i in store.items()
++    ]
+     lines.append(f"Total: {fmt_price(store.total_value())}")
+     return "\n".join(lines)
+diff --git a/inventory/store.py b/inventory/store.py
+index 8f5c5fa..87079e3 100644
+--- a/inventory/store.py
++++ b/inventory/store.py
+@@ -27,5 +27,5 @@ class Store:
+ 
+     def total_value(self) -> float:
+         if self._total is None:
+-            self._total = sum(int(i.price) * i.qty for i in self._items.values())
++            self._total = sum(i.price * (1 - i.discount / 100) * i.qty for i in self._items.values())
+         return self._total

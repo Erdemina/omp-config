@@ -1,0 +1,19 @@
+diff --git a/inventory/report.py b/inventory/report.py
+index 6aeceba..d39fcff 100644
+--- a/inventory/report.py
++++ b/inventory/report.py
+@@ -1,11 +1,11 @@
+ from .store import Store
+ 
+ 
+-def fmt_price(value: float) -> str:
++def format_price(value: float) -> str:
+     return f"${value:,.2f}"
+ 
+ 
+ def format_report(store: Store) -> str:
+-    lines = [f"{i.name}: {i.qty} x {fmt_price(i.price)}" for i in store.items()]
+-    lines.append(f"Total: {fmt_price(store.total_value())}")
++    lines = [f"{i.name}: {i.qty} x {format_price(i.price)}" for i in store.items()]
++    lines.append(f"Total: {format_price(store.total_value())}")
+     return "\n".join(lines)

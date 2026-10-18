@@ -1,0 +1,12 @@
+diff --git a/inventory/store.py b/inventory/store.py
+index 8f5c5fa..83ee7fe 100644
+--- a/inventory/store.py
++++ b/inventory/store.py
+@@ -18,6 +18,7 @@ class Store:
+         item.qty -= qty
+         if item.qty <= 0:
+             del self._items[name]
++        self._total = None
+ 
+     def find(self, name: str):
+         return self._items.get(name)
