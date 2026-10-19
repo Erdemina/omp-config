@@ -24,7 +24,7 @@ Write there only lasting facts: project overview, architecture decisions, conven
 
 If the private memory repository is unavailable, use the project's existing README and architecture documentation. Add a concise project memory section to existing documentation when necessary. Do not fail startup or create a second Git repository.
 
-Use `task_checkpoint` for objective, completed work, pending steps, modified files, decisions, tests, failures and next action. Save at meaningful boundaries, before planned compaction or provider transitions. Keep checkpoints under 32 KiB. Use `/checkpoint` after `omp --continue` or `omp --resume` to recover the same session's state. Verify files and tool outcomes before continuing; a checkpoint never authorizes replaying side effects. Native history is primary; checkpoints are a safety net. Do not load all memory files into every prompt.
+Use `task_checkpoint` for objective, completed work, pending steps, modified files, decisions, tests, failures and next action. Save at meaningful boundaries, before planned compaction or provider transitions. Keep checkpoints under 32 KiB. After `omp --continue` or `omp --resume`, recover state from native history and, when needed, read the saved path in the checkpoint tool result or session entry. Verify files and tool outcomes before continuing; a checkpoint never authorizes replaying side effects. Native history is primary; checkpoints are a safety net. Do not load all memory files into every prompt.
 
 ## Skills
 

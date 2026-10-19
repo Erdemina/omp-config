@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from "node:crypto";
-import { mkdir, readFile, realpath, rename, unlink, writeFile } from "node:fs/promises";
+import { mkdir, realpath, rename, unlink, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { join } from "node:path";
 
@@ -36,15 +36,4 @@ export async function saveCheckpoint(path: string, checkpoint: Checkpoint): Prom
 	} finally {
 		await unlink(temporary).catch(error => { if (error.code !== "ENOENT") throw error; });
 	}
-}
-export async function loadCheckpoint(path: string): Promise<Checkpoint | undefined> {
-	let text: string;
-	try { text = await readFile(path, "utf8"); } catch (error) {
-		if (error instanceof Error && "code" in error && error.code === "ENOENT") return undefined;
-		throw error;
-	}
-	const data = JSON.parse(text);
-	if (data.version !== 1) throw new Error("Unsupported checkpoint version");
-	validateCheckpoint(data.checkpoint);
-	return data.checkpoint;
 }

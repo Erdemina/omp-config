@@ -8,7 +8,6 @@ OMP_FILES=(
   agents/opus.md
   agents/gpt6.md
   extensions/provider-modes.ts
-  extensions/lib/usage.ts
   extensions/lib/modes.ts
   extensions/lib/checkpoint.ts
 )
@@ -19,6 +18,7 @@ OMP_RETIRED_FILES=(
   extensions/orchestrator.ts
   quota.py
   codex-lane.yml
+  extensions/lib/usage.ts
 )
 
 OMP_LOCK=

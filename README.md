@@ -1,6 +1,6 @@
 # omp-config
 
-Portable OMP policy: explicit provider modes, conservative quota display, and resumable task checkpoints.
+Portable OMP policy: automatic provider-matched helper roles and resumable task checkpoints.
 
 The repository contains no credentials, sessions, or databases. Authentication remains in each machine's `~/.omp/agent`.
 
@@ -11,7 +11,7 @@ The repository contains no credentials, sessions, or databases. Authentication r
 | `config.yml` | Model roles, disabled automatic provider fallback, task concurrency, compaction. |
 | `AGENTS.md` | Global delegation, quota, memory, and output policy. |
 | `agents/opus.md`, `agents/gpt6.md` | Specialist subagents. |
-| `extensions/provider-modes.ts`, `extensions/lib/` | `/claude`, `/codex`, `/mixed`, `/quota`, `/checkpoint`, and `task_checkpoint`. |
+| `extensions/provider-modes.ts`, `extensions/lib/` | Automatic helper routing and `task_checkpoint`; no custom slash commands. |
 | `files.sh`, `install.sh`, `rollback.sh`, `capture.sh`, `scan.sh` | Mirrored-file manifest and safe deployment tools. |
 
 ## Install and rollback
@@ -26,10 +26,10 @@ After changing policy in OMP, run `bash capture.sh --dry-run`, then `bash captur
 
 ## Model modes and quota
 
-`/codex` selects the Codex default model and Codex role family. `/claude` selects the Claude family. `/mixed` deliberately permits both families (Codex default/slow; Claude other roles). Each command refuses to switch while a job is active or its default model is unavailable. The selected mode persists on the session branch. Native `/model` still owns the main model; explicit subagent model selectors remain unchanged. On an unmarked session, Codex roles are the default, but an explicitly selected main model is not replaced.
+Choose the main model with native `/model` or the CLI. At session startup/restoration and before each user turn, helper roles follow its provider: `openai-codex` uses Codex roles; `anthropic` uses Claude roles. The extension never replaces the main model. Explicit subagent model selectors remain unchanged. Historical provider-mode entries are ignored. The custom `/claude`, `/codex`, `/mixed`, `/quota`, and `/checkpoint` commands have been removed. Restart OMP after installing the extension changes.
 
-`/usage` remains OMP's native command. `/quota` reads `omp usage --json`, displays only Claude and Codex summaries, and reports missing, stale, or ambiguous data as `unknown`. It does not switch providers. Before large unattended parallel work, check `omp usage` directly.
+`/usage` remains OMP's native command. Before large unattended parallel work, check `omp usage` directly. Missing or stale quota data is unknown, not permission to switch providers.
 
 The fallback settings disable automatic changes after API errors or quota checks. A provider error does not prove quota exhaustion. No command retries an interrupted turn on another provider; tool effects are not rolled back.
 
-`task_checkpoint` saves concise state in the local OMP directory keyed by project and session. `/checkpoint` displays the saved state. Save before compaction or a risky transition; resume in the same native session and verify effects rather than replaying them. Do not put secrets in checkpoint fields.
+`task_checkpoint` saves concise state in the local OMP directory keyed by project and session. Its result and session entry contain the saved file path. Save before compaction or a risky transition; resume in the same native session and read that file when needed. Verify effects rather than replaying them. Do not put secrets in checkpoint fields.
