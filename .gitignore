@@ -3,3 +3,4 @@ __pycache__/
 portable-backups/
 .env
 .env.*
+.capture-backup.*/

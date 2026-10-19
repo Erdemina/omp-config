@@ -9,14 +9,9 @@ modelRoles:
   commit: anthropic/claude-haiku-4-5:low
   advisor: anthropic/claude-sonnet-5-5:low
   vision: anthropic/claude-sonnet-5-5:low
-  image: openai-codex/gpt-image-1
   default: openai-codex/gpt-6-astra
-modelTags:
-  orchestrator:
-    name: Primary (AUTO)
-    color: success
 cycleOrder:
-  - orchestrator
+  - default
   - smol
   - slow
 defaultThinkingLevel: minimal
@@ -39,9 +34,7 @@ task:
     scout: "@task"
     sonic: "@smol"
 compaction:
-  thresholdTokens: 25000
   idleEnabled: true
-  idleThresholdTokens: 40000
   idleTimeoutSeconds: 3600
 recap:
   enabled: false

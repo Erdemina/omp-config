@@ -10,17 +10,21 @@ Model routing lives in `config.yml`; don't restate it here. Keep the model the u
 
 ## Delegation
 
-Delegate only when it clearly beats doing the work yourself; ordinary coding stays with the primary agent. This machine has 14 GiB RAM: at most 3 concurrent subagents, fewer when something else heavy is running. Parallel writers need disjoint files (otherwise separate Git worktrees); you integrate and run the final check. Pick the cheapest model that can reliably do the slice. Unattended jobs keep the existing approval rules.
+Delegate only when it clearly beats doing the work yourself; ordinary coding stays with the primary agent. At most 2 concurrent subagents, fewer when memory is constrained. Parallel writers need disjoint files; integrate and run the final check once. Use the selected provider mode's roles. Lightweight models are for mechanical tasks, not uncertain engineering. Unattended jobs keep the existing approval rules.
 
 ## Effort
 
-The orchestrator picks thinking/effort per task, never as a session default. `defaultThinkingLevel: minimal` is the ceiling for ordinary work. Escalate a specific task with an explicit `model: "provider/model:high"` only when that task actually fails or needs it; never raise the whole lane. The `slow` lane is GPT-6 Sol on Codex (its own quota); still pick its effort per task, not as a default.
+Use `defaultThinkingLevel: minimal` for ordinary work. Raise effort only for a specific difficult task. Use `@slow` within the selected provider mode. Do not silently replace a strong coding model with a lightweight model.
 
 ## Durable memory
 
 Shared memory for every agent on this machine (omp, Claude Code, Codex) is the private Git repo `~/erdem-memory`. At the start of non-trivial work read its `INDEX.md`, then only the matching `user.md`, `machine.md` or `projects/<slug>.md`; trust it instead of re-surveying projects, and verify a fact against the repo before acting on it if it may be stale.
 
-Write there only lasting facts: user preferences, architecture, decisions with dates, non-obvious integration constraints, deploy/ops paths. Update the existing file (keep it short, replace stale lines), add a line to `INDEX.md` for a new file, then run `~/erdem-memory/sync.sh "<message>"` to commit and push. Task state stays in the session. Never write secrets — record where they live instead — and no source dumps or routine history. If `~/erdem-memory` doesn't exist, skip this section.
+Write there only lasting facts: project overview, architecture decisions, conventions, constraints, module relationships and known issues. Keep one source of truth; link existing project documentation instead of copying it. Update the existing file and INDEX entry, then run `~/erdem-memory/sync.sh "<message>"` only when that separate repository is available. Never commit application changes as part of memory synchronization. Never write secrets or transcripts.
+
+If the private memory repository is unavailable, use the project's existing README and architecture documentation. Add a concise project memory section to existing documentation when necessary. Do not fail startup or create a second Git repository.
+
+Use `task_checkpoint` for objective, completed work, pending steps, modified files, decisions, tests, failures and next action. Save at meaningful boundaries, before planned compaction or provider transitions. Keep checkpoints under 32 KiB. Use `/checkpoint` after `omp --continue` or `omp --resume` to recover the same session's state. Verify files and tool outcomes before continuing; a checkpoint never authorizes replaying side effects. Native history is primary; checkpoints are a safety net. Do not load all memory files into every prompt.
 
 ## Skills
 
